@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page Title</title>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+  <script>
+    let a = prompt('Provide a number');
+    function add7() {
+      
+      let a7 = parseInt(a) + 7;
+      return ("Your number incread by 7 is: " + (a7));
+    }
+    console.log(add7());
+    let b = prompt('Provide a second number');
+    function multiply() {
+      let ab = a * b;
+      return ("Your first number multiplied by second comes to: " + (ab));
+    }
+    console.log(multiply());
+
+    let string = prompt("Provide a sentence");
+    function capitalize() {
+      let lowerCaseString = string.toLowerCase();
+      return ("Only first letter capitalized will look like this: " + lowerCaseString.charAt(0).toUpperCase() + lowerCaseString.slice(1));
+    }
+    console.log(capitalize());
+
+    function lastLetter() {
+      return ("Last letter of your sentence is: " + string.slice(-1));
+    }
+    console.log(lastLetter());
+  </script>
+</body>
+</html>
