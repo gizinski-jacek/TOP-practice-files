@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page Title</title>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+  <script>
+    // Check for prime numbers up to provided number.
+    let n = prompt('How many numbers you want to check?');
+    nextPrime:
+    for (let i = 2; i <= n; i++) {
+      for (let j = 2; j < i; j++) {
+          if (i % j == 0) {
+            continue nextPrime;
+          }
+        } console.log(i + ' is a prime');
+      }
+  </script>
+</body>
+</html>
