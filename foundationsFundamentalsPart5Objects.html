@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+    <meta charset="UTF-8"/>
+</head>
+<body>
+    <script>
+
+/* https://javascript.info/object#tasks */
+
+    let user = {};
+    user.name = 'John';
+    user.surname = 'Smith';
+    user.name = 'Pete';
+    delete user.name;
+    console.log(user);
+
+/* -------------------------------------------------- */
+
+    function isEmpty(obj) {
+        for (let key in obj) {
+            return false;
+        } return true;
+    }
+
+    console.log(isEmpty());
+
+/* -------------------------------------------------- */
+
+    let salaries = {
+        John: 100,
+        Ann: 160,
+        Pete: 130,
+    }
+
+    let sum = 0;
+    for (let key in salaries) {
+        sum += salaries[key];
+    }
+
+    console.log(sum);
+
+/* -------------------------------------------------- */
+
+    let menu = {
+    width: 200,
+    height: 300,
+    title: "My menu",
+    }
+
+    function multiplyNumeric(obj) {
+        for (let key in obj) {
+            if (typeof obj[key] == 'number') {
+                obj[key] *= 2;
+            }
+        }
+    }
+
+
+/* -------------------------------------------------- */
+/* https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Test_your_skills:_Object_basics */
+    
+    let bandInfo;
+
+    bandInfo = {
+        name: 'Metallica',
+        nationality: 'Nordic',
+        genre: ['Metal', 'Heavy Metal', 'Rock',],
+        members: ['Guitar', 'Drums', 'Electric Guitar',],
+        form: 1986,
+        split: 2006,
+        albums: {
+            first: {
+                name: 'Highway to Hell',
+                released: 1990,
+                }
+            },
+            second: {
+                name: 'Set the Floor',
+                released: 1995,
+            },
+            third: {
+                name: 'Rampage',
+                released: 1998,
+            },
+        }
+    let bandInfoString = 'The bands name is ' + bandInfo.name + '. ' + 'They come from ' + 
+    bandInfo.nationality + ' countries. ' + 'They were active between ' + bandInfo.form + 
+    ' and ' + bandInfo.split + '. ' + 'They played ' + bandInfo.genre[0] + ', ' + 
+    bandInfo.genre[1] + ' and ' + bandInfo.genre[2] + ' music. ' + 'Their first album was released in ' + 
+    bandInfo.albums.first.released + ' titled ' + bandInfo.albums.first.name + '.';
+
+/* -------------------------------------------------- */
+
+    let cat1 = {
+        name : 'Bertie',
+        breed : 'Cymric',
+        color : 'white',
+        greeting: function() {
+            console.log('Hello, said ' + this.name + ' the ' + this.breed + '.');
+        }
+    }
+
+    let cat2 = {
+        name : 'Nicolas',
+        breed : 'Pomer',
+        color : 'black',
+        greeting: function() {
+            console.log('Hello, said ' + this.name + ' the ' + this.breed + '.');
+        }
+    }
+
+    function greet(cat) {
+        cat.greeting();
+    }
+
+    greet(cat1);
+    greet(cat2);
+
+    </script>
+</body>
+</html>
