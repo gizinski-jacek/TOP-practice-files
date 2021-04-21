@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+    <style>
+        span {
+            display: flex;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        p {
+            border: 1px solid black;
+        }
+    </style>
+    <form class="newForm">
+        <span>Title</span><input type="text" id="newTitle"><br>
+        <span>Author</span><input type="text" id="newAuthor"><br>
+        <span>Pages</span><input type="text" id="newPages"><br>
+        <span>Finished reading?<input type="radio" name="newFinished" value="true">Yes
+        <input type="radio" name="newFinished" value="false" checked>No</span>
+        </form>
+    <button type="submit" class="newBook">Add new book</button>
+    <button type="button" class="showBooks">Show all books</button>
+    <div class="main">
+        <div class="displayBooks"></div>
+    </div>
+    <script>
+        const newBook = document.querySelector('.newBook');
+        const showBooks = document.querySelector('.showBooks');
+        const bookDisplay = document.querySelector('.displayBooks');
+
+        newBook.addEventListener('click', function() {
+            addToLibrary();
+        })
+        showBooks.addEventListener('click', function () {
+            showLibrary();
+        })
+
+        let myLibrary = [];
+
+        function Book(title, author, pages, finished) {
+            this.title = title;
+            this.author = author;
+            this.pages = pages;
+            this.finished = finished;
+            this.info = function() {
+                return this.title + ' by ' + this.author + ', ' + this.pages + ' pages, ' + 
+                (this.finished ? 'finished reading.' : 'still reading.');
+            }
+        }
+
+        function checked() {
+            let ele = document.querySelectorAll('[name=newFinished]');
+            for (i = 0; i < ele.length; i++) {
+                if (ele[i].checked) {
+                    return (ele[i].value == 'true')
+                }
+            }
+        }
+        
+        function addToLibrary() {
+            let title = document.querySelector('#newTitle').value;
+            let author = document.querySelector('#newAuthor').value;
+            let pages = Number(document.querySelector('#newPages').value);
+            let finished = checked()
+            if (title == '' && author == '' && pages == '') {
+                alert('All fields are empty!')
+            } else {
+                let newBook = new Book(title, author, pages, finished);
+                myLibrary.push(newBook);
+            }
+            document.querySelector('.newForm').reset();
+        }
+
+        function showLibrary() {
+            bookDisplay.textContent = '';
+            let i = 0;
+            while (i < myLibrary.length) {
+                let showBook = document.createElement('p');
+                showBook.textContent = myLibrary[i].info();
+                bookDisplay.appendChild(showBook);
+                i++;
+            }
+        }
+
+        let book1 = new Book('test1');
+        book1.title = 'test1';
+        book1.author = 'author1';
+        book1.pages = 111;
+        book1.finished = false;
+        let book2 = new Book('test2');
+        book2.title = 'test2';
+        book2.author = 'author2';
+        book2.pages = 222;
+        book2.finished = true;
+        let book3 = new Book('test3');
+        book3.title = 'test3';
+        book3.author = 'author3';
+        book3.pages = 333;
+        book3.finished = false;
+
+        myLibrary.push(book1);
+        myLibrary.push(book2);
+        myLibrary.push(book3);
+        
+    </script>
+</body>
+</html>
