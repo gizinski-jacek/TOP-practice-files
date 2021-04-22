@@ -6,9 +6,13 @@
 </head>
 <body>
     <style>
+        body {
+            margin: 10px 0 0 20px;
+        }
         span {
             display: flex;
-            margin-top: 10px;
+            font-size: 18px;
+            margin-top: 5px;
             margin-bottom: 5px;
         }
         .displayBooks {
@@ -51,6 +55,16 @@
         .btnStatus:hover {
             background-color: yellow;
         }
+        .newBook, .btnShowBooks {
+            margin: 8px;
+            font-size: 14px;
+            height: 40px;
+            width: 120px;
+            color: black;
+            border: 2px solid black;
+            border-radius: 5px;
+            background-color: rgb(255, 150, 0);
+        }
     </style>
     <form class="newForm">
         <span>Title:</span><input type="text" id="newTitle"><br>
@@ -62,6 +76,7 @@
     <button type="submit" class="newBook">Add new book</button>
     <button type="button" class="btnShowBooks">Show all books</button>
     <div class="main">
+        <span>Bookcase</span>
         <div class="bookcase"></div>
     </div>
     <script>
@@ -144,7 +159,7 @@
         }
 
         function showLibrary() {
-            bookcase.textContent = 'Bookcase';
+            bookcase.textContent = '';
             let i = 0;
             while (i < myLibrary.length) {
                 let showBook = document.createElement('div');
