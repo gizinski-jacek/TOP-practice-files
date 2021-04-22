@@ -11,52 +11,90 @@
             margin-top: 10px;
             margin-bottom: 5px;
         }
-        p {
-            border: 1px solid black;
+        .displayBooks {
+            display: flex;
+            flex-direction: column;
+        }
+        .book {
+            position: relative;
+            min-height: 120px;
+            min-width: 300px;
+            max-height: 200px;
+            max-width: 600px;
+            border: 5px solid rgb(0, 150, 150);
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 5px;
+        }
+        .btnDelete {
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+            color: black;
+            height: 40px;
+            width: 40px;
+            border: 2px solid black;
+            background-color: red;
+            border-radius: 5px;
+        }
+        .btnStatus {
+            position: absolute;
+            right: 50px;
+            bottom: 5px;
+            font-size: 16px;
+            color: black;
+            height: 40px;
+            width: 100px;
+            border: 2px solid black;
+            border-radius: 5px;
+        }
+        .btnStatus:hover {
+            background-color: yellow;
         }
     </style>
     <form class="newForm">
-        <span>Title</span><input type="text" id="newTitle"><br>
-        <span>Author</span><input type="text" id="newAuthor"><br>
-        <span>Pages</span><input type="text" id="newPages"><br>
-        <span>Finished reading?<input type="radio" name="newFinished" value="true">Yes
-        <input type="radio" name="newFinished" value="false" checked>No</span>
-        </form>
+        <span>Title:</span><input type="text" id="newTitle"><br>
+        <span>Author:</span><input type="text" id="newAuthor"><br>
+        <span>Pages:</span><input type="text" id="newPages"><br>
+        <span>Status:</span><input type="radio" name="newStatus" value="true">Finished
+        <input type="radio" name="newStatus" value="false" checked>Reading
+    </form>
     <button type="submit" class="newBook">Add new book</button>
-    <button type="button" class="showBooks">Show all books</button>
+    <button type="button" class="btnShowBooks">Show all books</button>
     <div class="main">
-        <div class="displayBooks"></div>
+        <div class="bookcase"></div>
     </div>
     <script>
-        const newBook = document.querySelector('.newBook');
-        const showBooks = document.querySelector('.showBooks');
-        const bookDisplay = document.querySelector('.displayBooks');
+        const buttonNewBook = document.querySelector('.newBook');
+        const buttonShowBooks = document.querySelector('.btnShowBooks');
+        const bookcase = document.querySelector('.bookcase');
 
-        newBook.addEventListener('click', function() {
+        buttonNewBook.addEventListener('click', () => {
             addToLibrary();
         })
-        showBooks.addEventListener('click', function () {
+        
+        buttonShowBooks.addEventListener('click', () => {
             showLibrary();
         })
 
         let myLibrary = [];
 
-        function Book(title, author, pages, finished) {
+        function Book(title, author, pages, status) {
             this.title = title;
             this.author = author;
             this.pages = pages;
-            this.finished = finished;
+            this.status = status;
             this.info = function() {
-                return this.title + ' by ' + this.author + ', ' + this.pages + ' pages, ' + 
-                (this.finished ? 'finished reading.' : 'still reading.');
+                return this.title + ' written by ' + this.author + ', ' + this.pages + ' pages, ' + 
+                (this.status ? 'finished reading.' : 'still reading.');
             }
         }
 
-        function checked() {
-            let ele = document.querySelectorAll('[name=newFinished]');
-            for (i = 0; i < ele.length; i++) {
-                if (ele[i].checked) {
-                    return (ele[i].value == 'true')
+        function statusCheck() {
+            let element = document.querySelectorAll('[name=newStatus]');
+            for (i = 0; i < element.length; i++) {
+                if (element[i].checked) {
+                    return (element[i].value == 'true')
                 }
             }
         }
@@ -65,47 +103,98 @@
             let title = document.querySelector('#newTitle').value;
             let author = document.querySelector('#newAuthor').value;
             let pages = Number(document.querySelector('#newPages').value);
-            let finished = checked()
+            let status = statusCheck()
             if (title == '' && author == '' && pages == '') {
-                alert('All fields are empty!')
+                alert('All fields are empty!');
             } else {
-                let newBook = new Book(title, author, pages, finished);
+                let newBook = new Book(title, author, pages, status);
                 myLibrary.push(newBook);
             }
+            showLibrary()
             document.querySelector('.newForm').reset();
         }
 
-        function showLibrary() {
-            bookDisplay.textContent = '';
-            let i = 0;
-            while (i < myLibrary.length) {
-                let showBook = document.createElement('p');
-                showBook.textContent = myLibrary[i].info();
-                bookDisplay.appendChild(showBook);
-                i++;
-            }
+        function removeBook(btnDel) {
+            btnDel.forEach((button) => {
+                button.addEventListener('click', (e) => {
+                    if (confirm('Delete this book?')) {
+                        myLibrary.splice(e.target.parentElement.id, 1);
+                        showLibrary();
+                    }
+                })
+            })
         }
 
-        let book1 = new Book('test1');
-        book1.title = 'test1';
-        book1.author = 'author1';
-        book1.pages = 111;
-        book1.finished = false;
-        let book2 = new Book('test2');
-        book2.title = 'test2';
-        book2.author = 'author2';
-        book2.pages = 222;
-        book2.finished = true;
-        let book3 = new Book('test3');
-        book3.title = 'test3';
-        book3.author = 'author3';
-        book3.pages = 333;
-        book3.finished = false;
+        function statusChange(btnStat) {
+            btnStat.forEach((button) => {
+                button.addEventListener('click', (e) => {
+                    if (myLibrary[e.target.parentElement.id].status){
+                        myLibrary[e.target.parentElement.id].status = false;
+                        e.target.textContent = 'Finished';
+                        e.target.style.backgroundColor = 'lime';
+                        showLibrary()
+                    } else if (!myLibrary[e.target.parentElement.id].status) {
+                        myLibrary[e.target.parentElement.id].status = true;
+                        e.target.textContent = 'Reading';
+                        e.target.style.backgroundColor = 'yellowgreen';
+                        showLibrary()
+                    }
+                })
+            })
+        }
 
+        function showLibrary() {
+            bookcase.textContent = 'Bookcase';
+            let i = 0;
+            while (i < myLibrary.length) {
+                let showBook = document.createElement('div');
+                showBook.classList.add('book');
+                showBook.setAttribute('id', i);
+                showBook.textContent = myLibrary[i].info();
+
+                let newDeleteButton = document.createElement('button');
+                newDeleteButton.classList.add('btnDelete');
+                newDeleteButton.setAttribute('type', 'button');
+                newDeleteButton.textContent = 'X';
+                showBook.appendChild(newDeleteButton);
+
+                let newStatusButton = document.createElement('button');
+                newStatusButton.classList.add('btnStatus');
+                newStatusButton.setAttribute('type', 'button');
+                newStatusButton.textContent = myLibrary[i].status ? 'Finished' : 'Reading';
+                newStatusButton.style.backgroundColor = myLibrary[i].status ? 'lime' : 'yellowgreen';
+                showBook.appendChild(newStatusButton);
+
+                bookcase.appendChild(showBook);
+                i++;
+            }
+            let allDeleteButtons = document.querySelectorAll('.btnDelete');
+            removeBook(allDeleteButtons);
+            let allStatusButtons = document.querySelectorAll('.btnStatus');
+            statusChange(allStatusButtons);
+        }
+
+        let book1 = new Book('Book1');
+        book1.title = 'Book1';
+        book1.author = 'Author1';
+        book1.pages = 146;
+        book1.status = false;
+        let book2 = new Book('Book2');
+        book2.title = 'Book2';
+        book2.author = 'Author2';
+        book2.pages = 212;
+        book2.status = true;
+        let book3 = new Book('Book3');
+        book3.title = 'Book3';
+        book3.author = 'Author3';
+        book3.pages = 312;
+        book3.status = false;
         myLibrary.push(book1);
         myLibrary.push(book2);
         myLibrary.push(book3);
-        
+
+        document.querySelector('.newForm').reset();
+        showLibrary();
     </script>
 </body>
 </html>
