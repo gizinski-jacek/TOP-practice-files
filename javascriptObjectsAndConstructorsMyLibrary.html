@@ -76,7 +76,6 @@
     <button type="submit" class="newBook">Add new book</button>
     <button type="button" class="btnShowBooks">Show all books</button>
     <div class="main">
-        <span>Bookcase</span>
         <div class="bookcase"></div>
     </div>
     <script>
@@ -104,6 +103,15 @@
                 (this.status ? 'finished reading.' : 'still reading.');
             }
         }
+
+        // function saveLibrary() {
+        //     localStorage.setItem('localLibrary', JSON.stringify(myLibrary));
+        // }
+
+        // function loadLibrary() {
+        //     myLibrary = JSON.parse(localStorage.getItem('localLibrary'));
+        //     return myLibrary;
+        // }
 
         function statusCheck() {
             let element = document.querySelectorAll('[name=newStatus]');
@@ -188,25 +196,6 @@
             let allStatusButtons = document.querySelectorAll('.btnStatus');
             statusChange(allStatusButtons);
         }
-
-        let book1 = new Book('Book1');
-        book1.title = 'Book1';
-        book1.author = 'Author1';
-        book1.pages = 146;
-        book1.status = false;
-        let book2 = new Book('Book2');
-        book2.title = 'Book2';
-        book2.author = 'Author2';
-        book2.pages = 212;
-        book2.status = true;
-        let book3 = new Book('Book3');
-        book3.title = 'Book3';
-        book3.author = 'Author3';
-        book3.pages = 312;
-        book3.status = false;
-        myLibrary.push(book1);
-        myLibrary.push(book2);
-        myLibrary.push(book3);
 
         document.querySelector('.newForm').reset();
         showLibrary();
