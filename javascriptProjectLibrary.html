@@ -79,6 +79,7 @@
         <div class="bookcase"></div>
     </div>
     <script>
+        "use strict";
         const buttonNewBook = document.querySelector('.newBook');
         const buttonShowBooks = document.querySelector('.btnShowBooks');
         const bookcase = document.querySelector('.bookcase');
@@ -104,6 +105,13 @@
             }
         }
 
+        // function BookContainer() {
+        //     this.ele = document.createElement('div');
+        //     this.ele.classList.add('bookContainer');
+        //     this.ele.setAttribute('id', "!!NEED ID HERE!!");
+
+        // }
+
         // function saveLibrary() {
         //     localStorage.setItem('localLibrary', JSON.stringify(myLibrary));
         // }
@@ -115,7 +123,7 @@
 
         function statusCheck() {
             let element = document.querySelectorAll('[name=newStatus]');
-            for (i = 0; i < element.length; i++) {
+            for (let i = 0; i < element.length; i++) {
                 if (element[i].checked) {
                     return (element[i].value == 'true')
                 }
