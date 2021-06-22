@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Form Validation: Task 1, 2</title>
+		<style>
+			form * {
+				margin: 5px;
+			}
+			input:invalid {
+				box-shadow: 0 0 5px red;
+			}
+			textarea:invalid {
+				box-shadow: 0 0 5px red;
+			}
+		</style>
+	</head>
+	<body>
+		<form>
+			<h2>Enter your support query</h2>
+			<ul>
+				<li>
+					<label for="uname">User name:</label>
+					<input
+						pattern="[a-z]{1}.[\w]{3,}"
+						type="text"
+						name="uname"
+						id="uname"
+						required
+						minlength="1"
+						maxlength="20"
+					/>
+				</li>
+				<li>
+					<label for="email">Email address:</label>
+					<input
+						type="email"
+						pattern="[\w]{1,}@bigcorp.eu"
+						name="email"
+						id="email"
+						required
+					/>
+				</li>
+				<li>
+					<label for="phone">Phone number:</label>
+					<input
+						type="tel"
+						pattern="[\d]{10}|[\d]{3}[. -]{1}[\d]{3}[. -]{1}[\d]{4}"
+						name="phone"
+						id="phone"
+						required
+					/>
+				</li>
+				<li>
+					<label for="comment">Comment:</label>
+					<textarea
+						name="comment"
+						maxlength="200"
+						id="comment"
+						required
+					></textarea>
+				</li>
+				<li>
+					<button>Submit comment</button>
+				</li>
+			</ul>
+		</form>
+	</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Form validation: Task 3</title>
+		<style>
+			* {
+				box-sizing: border-box;
+				margin: 5px;
+			}
+			body {
+				background-color: #fff;
+				color: #333;
+				font: 1em / 1.4 Helvetica Neue, Helvetica, Arial, sans-serif;
+				padding: 1em;
+				margin: 0;
+			}
+			.error {
+				background-color: red;
+			}
+			input:invalid {
+				box-shadow: 0 0 5px red;
+			}
+		</style>
+	</head>
+	<body>
+		<form novalidate>
+			<label for="mail"
+				>I would like you to provide me with an e-mail address:</label
+			>
+			<input type="email" id="mail" name="mail" required minlength="10" />
+			<span id="error" aria-live="polite"></span>
+			<br />
+			<button type="submit">Submit</button>
+		</form>
+	</body>
+	<script>
+		const email = document.getElementById('mail');
+		const error = document.getElementById('error');
+		const form = document.querySelector('form');
+
+		email.addEventListener('input', (e) => {
+			console.log(email.validity.valid);
+			if (email.validity.valid) {
+				error.textContent = '';
+				error.className = 'error';
+			} else {
+				showError();
+			}
+		});
+
+		form.addEventListener('submit', (e) => {
+			if (!email.validity.valid) {
+				showError();
+				e.preventDefault();
+			}
+		});
+
+		function showError() {
+			if (email.validity.valueMissing) {
+				error.textContent = 'Need to provide something';
+			} else if (email.validity.typeMismatch) {
+				error.textContent = 'Need to provide email';
+			} else if (email.validity.tooShort) {
+				error.textContent =
+					'Email is too short, min ' + email.minLength;
+			}
+			error.className = 'error';
+		}
+	</script>
+</html>
