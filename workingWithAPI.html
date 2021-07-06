@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Giphy Fetching</title>
+        <style>
+            body {
+              background-color: rgba(125, 0, 255, 0.3);
+            }
+            #content {
+                display: flex;
+                height: 80vh;
+                align-items: center;
+                justify-content: center;
+            }
+            img {
+                max-height: 50%;
+            }
+            #buttons {
+                position: absolute;
+                bottom: 0;
+            }
+            button,
+            input {
+                text-align: center;
+                box-sizing: border-box;
+                font-size: 20px;
+                width: 150px;
+                height: 50px;
+                margin: 10px;
+            }
+            #notFound {
+                display: none;
+                position: absolute;
+                font-size: 28px;
+                color: red;
+                top: 50vh;
+            }
+          </style>
+    </head>
+    <body>
+        <div id="content">
+            <img src="#" id="gif"/>
+            <span id="notFound">Image not found</span>
+            <div id="buttons">
+                <button type="button" id="random">Random Cat</button>
+                <input type="text" id="query" placeholder="e.g. cute cats">
+                <button type="button" id="search">Search Gif</button>
+            </div>
+        </div>
+        <script>
+            const img = document.getElementById('gif');
+            const btnRandom = document.getElementById('random');
+            const btnSearch = document.getElementById('search');
+            const query = document.getElementById('query');
+            const notFound = document.getElementById('notFound');
+
+            btnRandom.addEventListener('click', () => {
+                fetchImage('');
+            });
+            
+            btnSearch.addEventListener('click', () => {
+                fetchImage(query.value)
+            })
+
+            function fetchImage(query) {
+                let url;
+                if (!query == '') {
+                    url = 'https://api.giphy.com/v1/gifs/translate?api_key=tdmQtHTXgoVAneoHsjqOQsCHo6Snca9k&s=' + query;
+                } else {
+                    url = 'https://api.giphy.com/v1/gifs/translate?api_key=tdmQtHTXgoVAneoHsjqOQsCHo6Snca9k&s=cats';
+                }
+                fetch(url, {mode: 'cors'})
+                .then((response) => {
+                    return response.json();
+                })
+                .then ((response) => {
+                    img.src = response.data.images.original.url;
+                    if (notFound.style.display == 'block') {
+                        notFound.style.display = 'none';
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                    img.src = 'https://thumbs.dreamstime.com/b/sad-face-doodle-icon-vector-illustration-color-184934100.jpg';
+                    notFound.style.display = 'block';
+                })
+            };
+            fetchImage();
+        </script>
+    </body>
+</html>
