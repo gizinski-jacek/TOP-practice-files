@@ -71,21 +71,21 @@
                     url = 'https://api.giphy.com/v1/gifs/translate?api_key=tdmQtHTXgoVAneoHsjqOQsCHo6Snca9k&s=cats';
                 }
                 fetch(url, {mode: 'cors'})
-                .then((response) => {
-                    return response.json();
-                })
-                .then ((response) => {
-                    img.src = response.data.images.original.url;
-                    if (notFound.style.display == 'block') {
-                        notFound.style.display = 'none';
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                    img.src = 'https://thumbs.dreamstime.com/b/sad-face-doodle-icon-vector-illustration-color-184934100.jpg';
-                    notFound.style.display = 'block';
-                })
-            };
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then ((response) => {
+                        img.src = response.data.images.original.url;
+                        if (notFound.style.display == 'block') {
+                            notFound.style.display = 'none';
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        img.src = 'https://thumbs.dreamstime.com/b/sad-face-doodle-icon-vector-illustration-color-184934100.jpg';
+                        notFound.style.display = 'block';
+                    })
+                };
             fetchImage();
         </script>
     </body>
